@@ -1,0 +1,16 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/jobnexus_db
+    username: root
+    password: admin123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+jwt:
+  secret-key: wRX3rsm0Eh/nzsc2CLN1StaZ4/jWXnuCy450YxZQep0=
+  expiration: 86400000  # 1 day in milliseconds
