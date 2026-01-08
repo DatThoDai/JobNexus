@@ -3,6 +3,7 @@ package com.JobsNow.backend.config;
 import com.JobsNow.backend.filter.AuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -41,10 +42,15 @@ public class SecurityConfig {
         return http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/auth/**").permitAll();
-                    request.requestMatchers("/job/create", "/job/update/**", "/job/delete/**").hasRole("COMPANY");
-                    request.requestMatchers("/job/approve/**","/job/reject/**").hasRole("ADMIN");
-                    request.requestMatchers("/job/**").permitAll();
+                    // COMPANY role
+                request.requestMatchers("/job/create").hasRole("COMPANY");
+                request.requestMatchers(HttpMethod.PUT, "/job/{jobId}").hasRole("COMPANY");
+                request.requestMatchers(HttpMethod.DELETE, "/job/{jobId}").hasRole("COMPANY");
+                // ADMIN
+                request.requestMatchers("/job/approve/**").hasRole("ADMIN");
+                request.requestMatchers(HttpMethod.PUT, "/job/reject").hasRole("ADMIN");
+                // Public
+                request.requestMatchers("/job/**").permitAll();
                     request.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session
