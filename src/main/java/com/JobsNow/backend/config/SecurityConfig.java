@@ -48,15 +48,17 @@ public class SecurityConfig {
 
                     request.requestMatchers(HttpMethod.GET, "/job", "/job/{jobId}", "/job/searchJobs").permitAll();
                     request.requestMatchers(HttpMethod.GET, "/job/company/{companyId}").permitAll();
-
+                    request.requestMatchers(HttpMethod.GET, "/skill/all").permitAll();
                     request.requestMatchers(HttpMethod.GET, "/category/**", "/industry/**", "/skill/**").permitAll();
-
                     request.requestMatchers(HttpMethod.GET, "/company/**").permitAll();
+                    request.requestMatchers(HttpMethod.GET, "/category/**").permitAll();
 
                     // ROLE-BASED
                     // ADMIN
                     request.requestMatchers("/job/approve/**").hasRole("ADMIN");
                     request.requestMatchers(HttpMethod.PUT, "/job/reject").hasRole("ADMIN");
+                    request.requestMatchers("/skill/add", "/skill/update", "/skill/delete/**").hasRole("ADMIN");
+                    request.requestMatchers("/category/add", "/category/update", "/category/delete/**").hasRole("ADMIN");
 
                     // COMPANY
                     request.requestMatchers("/job/create").hasRole("COMPANY");
