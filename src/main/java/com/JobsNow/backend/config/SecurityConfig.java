@@ -52,6 +52,7 @@ public class SecurityConfig {
                     request.requestMatchers(HttpMethod.GET, "/category/**", "/industry/**", "/skill/**").permitAll();
                     request.requestMatchers(HttpMethod.GET, "/company/**").permitAll();
                     request.requestMatchers(HttpMethod.GET, "/category/**").permitAll();
+                    request.requestMatchers(HttpMethod.GET, "/profile/{profileId}").permitAll();
 
                     // ROLE-BASED
                     // ADMIN
@@ -59,7 +60,7 @@ public class SecurityConfig {
                     request.requestMatchers(HttpMethod.PUT, "/job/reject").hasRole("ADMIN");
                     request.requestMatchers("/skill/add", "/skill/update", "/skill/delete/**").hasRole("ADMIN");
                     request.requestMatchers("/category/add", "/category/update", "/category/delete/**").hasRole("ADMIN");
-
+                    request.requestMatchers(HttpMethod.GET, "/profile/all").hasAnyRole("ADMIN", "COMPANY");
                     // COMPANY
                     request.requestMatchers("/job/create").hasRole("COMPANY");
                     request.requestMatchers(HttpMethod.PUT, "/job/{jobId}").hasRole("COMPANY");
@@ -72,9 +73,11 @@ public class SecurityConfig {
                     request.requestMatchers("/application/apply").hasRole("JOBSEEKER");
                     request.requestMatchers("/application/jobseeker/**").hasRole("JOBSEEKER");
                     request.requestMatchers("/profile/**").hasRole("JOBSEEKER");
-
+                    request.requestMatchers("/profile/user/{userId}").hasRole("JOBSEEKER");
+                    request.requestMatchers(HttpMethod.PUT, "/profile/{profileId}").hasRole("JOBSEEKER");
                     request.requestMatchers(HttpMethod.GET, "/application/{applicationId}").authenticated();
-
+                    request.requestMatchers("/profile/{profileId}/avatar").hasRole("JOBSEEKER");
+                    request.requestMatchers("/profile/skills").hasRole("JOBSEEKER");
                     request.anyRequest().authenticated();
                 })
                 .sessionManagement(session -> session

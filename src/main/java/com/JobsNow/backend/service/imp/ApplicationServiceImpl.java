@@ -30,14 +30,14 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Transactional
     public void applyForJob(ApplicationRequest request) {
         Job job = jobRepository.findById(request.getJobId())
-                .orElseThrow(() -> new RuntimeException("Job not found"));
+                .orElseThrow(() -> new NotFoundException("Job not found"));
         if(!job.getIsActive()||job.getIsDeleted()||!job.getIsApproved()){
             throw new BadRequestException("Job is not available for application");
         }
         JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(request.getProfileId())
-                .orElseThrow(() -> new RuntimeException("Job seeker profile not found"));
+                .orElseThrow(() -> new NotFoundException("Job seeker profile not found"));
         Resume resume = resumeRepository.findById(request.getResumeId())
-                .orElseThrow(() -> new RuntimeException("Resume not found"));
+                .orElseThrow(() -> new NotFoundException("Resume not found"));
         if(applicationRepository.existsByJob_JobIdAndJobSeekerProfile_ProfileId(request.getJobId(), request.getProfileId())){
             throw new BadRequestException("You have already applied for this job");
         }

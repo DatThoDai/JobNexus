@@ -18,6 +18,7 @@ public class JobSeekerProfileMapper {
                 .fullName(profile.getUser().getFullName())
                 .email(profile.getUser().getEmail())
                 .avatarUrl(profile.getAvatarUrl())
+                .title(profile.getTitle())
                 .bio(profile.getBio())
                 .phone(profile.getUser().getPhone())
                 .address(profile.getAddress())
@@ -34,7 +35,7 @@ public class JobSeekerProfileMapper {
                 )
                 .resumes(profile.getResumes() == null ? List.of()
                         :profile.getResumes().stream()
-                        .map(resume -> ResumeMapper.toResumeDTO(resume))
+                        .map(ResumeMapper::toResumeDTO)
                         .collect(Collectors.toList())
                 )
                 .build();
