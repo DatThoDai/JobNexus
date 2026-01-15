@@ -16,6 +16,7 @@ public class JobSeekerProfileDTO {
     private String fullName;
     private String email;
     private String avatarUrl;
+    private String title;
     private String bio;
     private String phone;
     private String address;

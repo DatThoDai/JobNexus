@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
     private final JobSeekerProfileRepository jobSeekerProfileRepository;
     private final CompanyRepository companyRepository;
     private final AwsS3Service awsS3Service;
-    private final String DEFAULT_AVATAR_URL = "https://imgur.com/6VBx3io";
+    private final String DEFAULT_AVATAR_URL = "https://jobsnow-uploads.s3.us-east-1.amazonaws.com/avatars/default-avatar_1768482222526.png";
     @Override
     @Transactional
     public String register(RegisterRequest registerRequest) {
